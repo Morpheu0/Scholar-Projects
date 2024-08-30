@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/index.css">
+    
+    <!-- Biblioteca e Scripts para o Mapa -->
+    <link rel="stylesheet" href="../style/leaflet.css">
+    <script src="../../backend/library/leaflet.js"></script>
+    <script src="../script/script.js" defer></script>
+    <!-- Fim -->
+    
+    <title>Rastreio De Compras</title>
+</head>
+<body>
+    <header>
+        <h1>Rastreio De Compras e Encomenda</h1>
+    </header>
+    <aside>
+        <div id="blocoDeBuscaCep">
+            <h2>Busca CEP Ou Endereço</h2>
+            <p>Não utilize nº de casa/ apto/ lote/ prédio<br>ou abreviatura</p>
+            <input type="text" id="cep" placeholder="Seu Cep">
+            <p id="buscarCepBtn">Buscar</p>
+        </div>
+    </aside>
+    <footer>
+        <h3>Central De Atendimento</h3>
+        <img src="../assets/chamada-telefonica.png" alt="Icone de telefone">
+        <h4>55+ 0800473831</h4>
+        <div id="map"></div>
+    </footer>
+    <script src="../script/script.js"></script>
+</body>
+</html>

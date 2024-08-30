@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
+
+
+body{
+    margin: 0;
+    padding: 0;
+}
+
+#map{
+    width: 600px;
+    height: 400px;
+    position: absolute;
+        bottom: 120px;
+        left: 700px;
+    box-shadow: 2px 2px 30px #999999;
+    border: 1px solid #999999;
+}
+
+header{
+    background-color: #080065;
+    padding: 1px;
+    text-align: center;
+    box-shadow: 2px 2px 30px #999999;
+}
+aside{
+    height: 450px;
+}
+h1{
+    color: #cecccc;
+    font-family: "Lalezar", system-ui;
+}
+#blocoDeBuscaCep{
+    position: relative;
+        top: 150px;
+        left: 25px;
+    width: 400px;
+    height: 150px;
+    background-color: rgb(233, 232, 232);
+    border: 1px solid #999999;
+    text-align: center;
+    box-shadow: 2px 2px 30px #999999;
+}
+#cep{
+    width: 94%;
+    height: 25px;
+    position: relative;
+        bottom: 40px;
+    border: 1px solid #656565;
+}
+
+#buscarCepBtn{
+    position: relative;
+        bottom: 78px;
+        left: 310px;
+    box-shadow: 1px 1px 30px #656565;
+    background-color: #080065;
+    color: white;
+    border-radius: 30px;
+    width: 70px;
+    cursor: pointer;
+}
+label{
+    transform:  translate(-50%);
+    color: #929191;
+    background-color: white;
+    padding: 0 5px;
+    transition: all 0.2s ease-in-out;
+}
+h2{
+    font-family: "Lalezar", system-ui;
+    color: #080065;
+    font-size: 30px;
+    position: relative;
+        bottom: 15px;
+}
+
+p{
+    font-family: "Lalezar", system-ui;
+    color: #636363;
+    font-size: 13px;
+    position: relative;
+        bottom: 45px;
+}
+footer{
+    background-color: #080065;
+    padding: 1px;
+    height: 130px;
+    text-align: center;
+    box-shadow: 2px 2px 0px #999999;
+}
+h3{
+    color: white;
+    font-size: 30px;
+    font-family: "Lalezar", system-ui;
+    position: relative;
+        top: -20px;
+}
+h4{
+    position: relative;
+        top: -100px;
+        left: -20px;
+    color: #636363;
+}
+
+img{
+    position: relative;
+        top: -60px;
+        left: -100px;
+}
+
+
+
