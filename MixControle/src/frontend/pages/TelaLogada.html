@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Estoque</title>
+    <link rel="stylesheet" href="../styles/telaLogada.css">
+    <script src="../script/telaLogada.js"> </script>
+</head>
+<body>
+    <main>
+        <div class="bloco">
+            <h2>Mix Controle</h2>
+            <ul>
+                <li onclick="showForm('addItem')"><a>Adicionar itens</a></li>
+                <li onclick="showForm('removeItem')"><a>Remover</a></li>
+                <li onclick="showForm('editItem')"><a>Editar</a></li>
+            </ul>
+
+            <ul id="sair">
+                <li id="botaoDeSaida">SAIR</li>
+            </ul>
+        </div>
+        <div class="estoque">
+
+        </div>
+    </main>
+
+    <div id="modalOverlay"></div>
+
+    <div class="container">
+        <!-- Formulários -->
+        <div id="addItem" class="form-container">
+            <button class="close-btn" onclick="closeForm()">X</button>
+            <h2>Adicionar Item</h2>
+            <form action="../php/add_item.php" method="POST">
+                <label for="description">Descrição:</label>
+                <input type="text" id="description" name="description" required>
+                <label for="quality">Qualidade:</label>
+                <input type="text" id="quality" name="quality" required>
+                <label for="price">Preço:</label>
+                <input type="number" id="price" name="price" step="0.01" required>
+                <label for="sale_price">Preço de Venda:</label>
+                <input type="number" id="sale_price" name="sale_price" step="0.01" required>
+                <input type="submit" value="Adicionar Item">
+            </form>
+        </div>
+
+        <div id="removeItem" class="form-container">
+            <button class="close-btn" onclick="closeForm()">X</button>
+            <h2>Remover Item</h2>
+            <form action="../php/remove_item.php" method="POST">
+                <label for="remove_id">ID do Item:</label>
+                <input type="number" id="remove_id" name="id" required>
+                <input type="submit" value="Remover Item">
+            </form>
+        </div>
+
+        <div id="editItem" class="form-container">
+            <button class="close-btn" onclick="closeForm()">X</button>
+            <h2>Editar Item</h2>
+            <form action="../php/edit_item.php" method="POST">
+                <label for="edit_id">ID do Item:</label>
+                <input type="number" id="edit_id" name="id" required>
+                <label for="edit_description">Nova Descrição:</label>
+                <input type="text" id="edit_description" name="description">
+                <label for="edit_quality">Nova Qualidade:</label>
+                <input type="text" id="edit_quality" name="quality">
+                <label for="edit_price">Novo Preço:</label>
+                <input type="number" id="edit_price" name="price" step="0.01">
+                <label for="edit_sale_price">Novo Preço de Venda:</label>
+                <input type="number" id="edit_sale_price" name="sale_price" step="0.01">
+                <input type="submit" value="Atualizar Item">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
