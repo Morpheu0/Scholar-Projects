@@ -1,0 +1,135 @@
+Arquivo de Chat: Armazenamento e Manipulação de Imagens em PHP e MySQL
+
+1. Introdução ao Armazenamento de Imagens em MySQL
+
+Armazenar imagens diretamente no banco de dados envolve salvar dados binários das imagens em uma coluna do tipo BLOB ou LONGBLOB.
+
+2. Estrutura da Tabela
+
+Certifique-se de que a tabela no MySQL tenha uma coluna do tipo LONGBLOB para armazenar os dados das imagens.
+
+ALTER TABLE itens ADD image LONGBLOB;
+
+3. Formulário HTML para Upload de Imagens
+
+<form action="../php/add_item.php" method="POST" enctype="multipart/form-data">
+    <label for="name">Nome:</label>
+    <input type="text" id="name" name="name" required>
+    
+    <label for="description">Descrição:</label>
+    <input type="text" id="description" name="description">
+    
+    <label for="quantity">Quantidade:</label>
+    <input type="number" id="quantity" name="quantity" required>
+    
+    <label for="price">Preço:</label>
+    <input type="number" id="price" name="price" step="0.01" required>
+    
+    <label for="sale_price">Preço de Venda:</label>
+    <input type="number" id="sale_price" name="sale_price" step="0.01" required>
+    
+    <label for="image">Imagem:</label>
+    <input type="file" id="image" name="image" accept="image/*">
+    
+    <input type="submit" value="Adicionar Item">
+</form>
+
+4. Processamento do Upload com PHP
+
+PHP (add_item.php):
+
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+include_once "database.php";
+session_start();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['name'];
+    $description = $_POST['description'];
+    $quantity = $_POST['quantity'];
+    $price = $_POST['price'];
+    $sale_price = $_POST['sale_price'];
+
+    // Manipulação da imagem
+    $imageData = null;
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $imageData = file_get_contents($_FILES['image']['tmp_name']);
+    }
+
+    // Prepara e executa a consulta SQL
+    $sql = $conn->prepare('INSERT INTO itens (name, description, quantity, price, sale_price, image) VALUES (?, ?, ?, ?, ?, ?)');
+    $sql->bind_param('ssddsb', $name, $description, $quantity, $price, $sale_price, $imageData);
+
+    if ($sql->execute()) {
+        echo 'Item adicionado com sucesso!';
+    } else {
+        echo 'Erro ao adicionar item: ' . $sql->error;
+    }
+
+    // Fecha a conexão
+    $sql->close();
+    $conn->close();
+}
+?>
+
+5. Configuração do PHP
+
+Certifique-se de que as seguintes diretivas no php.ini estão configuradas corretamente:
+
+- file_uploads = On
+- upload_max_filesize = 2M (ou o tamanho desejado)
+- post_max_size = 8M (ou o tamanho desejado)
+
+6. Exibição de Imagens Armazenadas
+
+Para exibir imagens armazenadas, use o seguinte código PHP para gerar uma URL de dados:
+
+PHP (query.php):
+
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+include_once "database.php";
+session_start();
+
+$query = isset($_GET['q']) ? $_GET['q'] : '';
+
+// Prepara e executa a consulta SQL
+$sql = $conn->prepare('SELECT * FROM itens WHERE name LIKE ?');
+$searchTerm = "%{$query}%";
+$sql->bind_param('s', $searchTerm);
+$sql->execute();
+
+// Obtém os resultados da consulta
+$result = $sql->get_result();
+
+// Exibe os resultados em formato HTML
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        echo '<div>';
+        if (!empty($row['image'])) {
+            $imageData = base64_encode($row['image']);
+            echo '<img src="data:image/jpeg;base64,' . $imageData . '" style="width:100px;height:100px;">';
+        }
+        echo '<h2>' . htmlspecialchars($row['name']) . '</h2>';
+        echo '<p>' . htmlspecialchars($row['description']) . '</p>';
+        echo '<p>Quantidade: ' . htmlspecialchars($row['quantity']) . '</p>';
+        echo '<p>Preço: R$ ' . htmlspecialchars($row['price']) . '</p>';
+        echo '<p>Preço de Venda: R$ ' . htmlspecialchars($row['sale_price']) . '</p>';
+        echo '</div>';
+    }
+} else {
+    echo 'Nenhum item encontrado.';
+}
+
+// Fecha a conexão
+$sql->close();
+$conn->close();
+?>
+
+7. Sobre o php.ini
+
+O php.ini é o arquivo de configuração principal do PHP. Ele controla muitas configurações importantes para o PHP, como o tamanho máximo de upload de arquivos e o limite de memória. Verifique e ajuste as configurações conforme necessário para garantir que seu servidor PHP esteja configurado corretamente para o upload de arquivos.
